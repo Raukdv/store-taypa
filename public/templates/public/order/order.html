@@ -1,0 +1,32 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block merchant_content %}
+
+  {% block breadcrumb %}
+    {% include 'public/_snippets/order/breadcrumb.html' %}
+  {% endblock breadcrumb %}
+
+  <div class="col-8">
+    <div class="h3">
+      Review 
+    </div>
+    <div class="card">
+      <div class="card-body">
+        {%for product in cart.products.all%}
+        {% include 'public/_snippets/order/product.html' %}
+      {%endfor%}
+      </div>
+      
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    {% url 'public:orderaddress_view' company.slug as next_url %}
+    {% include 'public/_snippets/order/resume.html' with next_url=next_url %}
+  </div>
+
+{% endblock merchant_content %}
+
+

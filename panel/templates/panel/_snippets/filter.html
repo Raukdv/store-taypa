@@ -1,0 +1,7 @@
+{% load bootstrap4 i18n %}
+
+<form action="" class="form-inline mb-3" method="GET">
+  {% bootstrap_form filter.form bound_css_class="" form_group_class="form mr-2" layout="inline" show_label=False size="sm" %}
+  <button class="btn btn-primary btn-sm mr-2" type="submit">{% trans "Filter" %}</button>
+  <a class="btn btn-link btn-sm" href="{{ request.path }}"><i class="fas fa-eraser"></i></a>
+</form>

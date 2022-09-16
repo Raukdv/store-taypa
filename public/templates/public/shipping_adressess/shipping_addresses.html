@@ -1,0 +1,25 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load bootstrap4 i18n %}
+
+
+
+{% block merchant_content %}
+
+<div class="col">
+    {% include 'public/_snippets/messages.html' %}
+    <div class="h3">
+        My addresses
+    </div>
+    <a href="{% url 'public:shippingaddress_add' company.slug %}">Add new address</a>
+    <div class="mt-2">
+        {% for shipping_address in object_list %}
+        <div class="mt-2">
+            {% include 'public/_snippets/shipping_addresses/shipping_address.html' with edit=True %}
+        </div>
+            
+        {% endfor%}
+    </div>
+</div>
+
+{% endblock merchant_content %}

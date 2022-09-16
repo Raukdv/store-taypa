@@ -1,0 +1,48 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% block merchant_content %}
+<div class="container text-end mx-auto mt-5 mb-5">
+<div class="card">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+       {% if product.image %}
+    <img class="img-fluid" src="{{ product.image.url }}" alt="Card image cap {{product.title}}"  >
+    {% endif %}
+    </div>
+
+
+    <div class="cols-xs-9 cols-sm-9 cols-md-9 cols-lg-9 ">
+     <div class="card-body">
+        <h5 class="card-title text-capitalize">{{product.title}}</h5>
+
+              <div class="h5 font-weight-bold card-price">
+                Precio: <span>${{product.price}}</span>
+              </div>
+
+              <div class="h5 text-capitalize">
+                <p>{{product.description}}</p>
+              </div>
+
+              <div class="h5 me-2 mb-5">
+                Disponible: <i class="fas fa-{{ product.available|yesno:'check,times' }} text-{{ product.available|yesno:'success,danger' }}"></i>
+              </div>
+
+              {% if product.available %}
+
+              {% include 'public/_snippets/add.html' %}
+
+              {% else %}
+
+              {% endif %}
+     </div>
+      
+    </div>
+    
+  </div>
+   
+  </div>
+</div>
+
+
+{% endblock merchant_content %}

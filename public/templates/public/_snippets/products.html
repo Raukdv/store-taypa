@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row ">
+{% for product in products %}
+
+  <div class="col-12 col-sm-10 col-md-6 col-lg-4 ">
+    <div class="card mb-4">
+    {% if product.image %}
+    <img class="card-img-top" src="{{ product.image.url }}" alt="Card image cap {{product.title}}" width="286" height="280">
+    {% endif %}
+
+    <div class="card-body">
+      <h5 class="card-title text-capitalize"> <strong> {{product.title}}</strong></h5>
+
+      <div class="h5 font-weight-bold mt-2 mb-2">
+        Precio: <span>${{product.price}}</span>
+      </div>
+
+      <div class="h4">
+        Disponible: <i class="fas fa-{{ product.available|yesno:'check,times' }} text-{{ product.available|yesno:'success,danger' }}"></i>
+      </div>
+
+      {% if product.available %}
+
+      <a class="btn btn-primary mt-2" href="{% url 'public:merchant_product_detail' company.slug product.slug%}">Ver</a>
+
+      {% else %}
+
+      {% endif %}
+
+    </div>
+  </div>
+  </div>
+
+
+{% endfor %}
+</div>
+</div>

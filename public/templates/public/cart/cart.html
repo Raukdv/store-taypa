@@ -1,0 +1,78 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load extra_products %}
+
+{% block merchant_content %}
+
+{% if cart.products.exists %}
+
+<div class="container mt-5">
+
+<div class="row col-xs-8">
+	<table class="table"> 
+
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col"></th>
+				<th scope="col">Producto</th>
+				<th scope="col" class="text-center">Cantidad: </th>
+				<th scope="col" class="text-center">Precio: </th>
+			</tr>
+		</thead>
+		<!-- Cuerpo de la tabla -->
+		<tbody>
+			<!-- solucion del n+1 query -->
+			{% for pdata in cart.products_related %}
+			{% with product=pdata.product %}
+				<tr>
+
+					<th class="align-middle">{{forloop.counter}}</th>
+					<th class="align-middle"> 
+						{% if product.image %}
+						<img src="{{ product.image.url }}" alt="imagen de {{product.title}}" min-width="70" height="70" class="rounded">
+						{% endif %}
+					</th>
+					<th >
+						<a href="#" class="product">{{ product.title}}</a>
+                        {% include 'public/_snippets/remove.html' %}
+					</th>
+
+					<th class="align-middle text-center">{{ pdata.quantity }}</th>
+
+					<th class="align-middle price text-center">
+						<span class=" align-middle font-weight-bold">{{product.price | price_format}}</span>
+					</th>
+				</tr>
+				{% endwith %}
+			{% endfor %}
+		</tbody>
+
+	</table>
+</div>
+
+<div class="col">
+	<div class="card">
+		<div class="card-body">
+			<div class="font-weight-bold">
+				Subtotal ({{ cart.products.count}}): <span class="text-danger"> {{ cart.subtotal | price_format }}</span>
+			</div>
+			<div class="mt-2">
+				<a href="{% url 'public:order_view' company.slug %}" class="btn btn-warning">Proceder al pago</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% else%}
+
+<div class="col text-center pt-5" >
+	<p class="h3"> Tu carrito se encuentra vacío. </p>
+	<a href="{% url 'public:merchant_detail' company.slug %}"">Llena tu carrito aquí.</a>
+</div>
+
+</div>
+
+{% endif %}
+
+{% endblock merchant_content %}

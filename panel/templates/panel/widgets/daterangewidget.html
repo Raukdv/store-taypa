@@ -1,0 +1,9 @@
+{% for widget in widget.subwidgets %}
+  <div class="input-group date" id="id_{{ widget.name }}_picker" data-eonpicker data-target-input="nearest">
+    {% include widget.template_name %}
+    <div class="input-group-append" data-target="#id_{{ widget.name }}_picker" data-toggle="datetimepicker">
+      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    </div>
+  </div>
+  {% if forloop.first %}-{% endif %}
+{% endfor %}

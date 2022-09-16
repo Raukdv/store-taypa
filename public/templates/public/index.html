@@ -1,0 +1,75 @@
+{% extends 'public/layout.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block content %}
+
+{% block navigation %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Taypa!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+
+      {% if request.user.is_authenticated %}
+
+      <a class="btn btn-secondary m-2 inline" href="{% url 'panel:index' %}">{% trans "Ir al administracíon" %}</a>
+
+      <a class="btn btn-secondary m-2 inlinehref="{% url 'billingprofile:billing_profile_list' %}">{% trans "Mis metodos de pago" %}</a>
+
+      {% else %}
+
+      <a class="btn btn-secondary" href="{% url 'accounts:account_login' %}">{% trans "Login" %}</a>
+
+      {% endif %}
+    </div>
+  </div>
+</nav>
+ 
+{% endblock navigation %}
+
+{% block banner_home%}
+<!-- <div class="banner-home">
+  
+</div> -->
+{% endblock banner_home%}
+
+
+  {% block content_inner %}
+  <div class="home-contain">
+  <div class="container pt-3 ">
+
+    {% include 'panel/_snippets/filter.html' %}
+   
+
+  <div class="row  ">
+    {% for company in object_list %}
+      <div class="col-12 col-sm-10 col-md-6 col-lg-4 mb-2 mt-4">
+        <div class="card company-body">
+
+          {% if company.logo %}
+          <img class="card-img-top" src="{{ company.logo.url }}" alt=" {{company}}" width="286" height="180"> {% else%} 
+         
+          {% endif %}
+   
+          <div class="card-body company-image">
+            <h5 class="card-title text-center mt-3 ">{{ company }}</h5>
+            <a class="  stretched-link " href="{{ company.get_absolute_merchant_url }}"></a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+  
+  
+  {% endblock content_inner %}
+
+</div>
+
+
+{% endblock content %}
+</div>

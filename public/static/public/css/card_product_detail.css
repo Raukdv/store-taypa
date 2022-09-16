@@ -1,0 +1,17 @@
+.card--container-products {
+    width: 18rem;
+    /* top: 5vh; */
+}
+.card-price span{
+    color: rgb(145, 147, 42);
+}
+.adds-buttons{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+.form-control{
+    width: 60px;
+ 
+}

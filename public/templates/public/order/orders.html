@@ -1,0 +1,18 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block merchant_content %}
+
+<div class="col">
+    <div class="h3">
+      Mis pedidos
+    </div>
+    <div class="">
+      {% for order in object_list %}
+        {% include 'public/_snippets/order/order.html' %}
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock merchant_content %}

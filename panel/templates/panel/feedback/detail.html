@@ -1,0 +1,42 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:feedback_list' company.slug %}">{% trans "Feedbacks" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <th class="w-25 text-right">{% trans "Creation date" %}</th>
+      <td>{{ object.date_creation|date:'DATETIME_FORMAT' }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Customer" %}</th>
+      <td><a href="{% url 'panel:customer_detail' company.slug object.customer.id %}">{{ object.customer|default:'' }}</a></td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Service" %}</th>
+      <td>{{ object.service|default:'' }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Positive" %}</th>
+      <td><i class="fas fa-{{ object.is_positive|yesno:'check,times' }} text-{{ object.is_positive|yesno:'success,danger' }}"></i></td>
+    </tr>
+    {% if object.detail %}
+      <tr>
+        <th class="w-25 text-right">{% trans "Detail" %}</th>
+        <td>{{ object.detail|default:''|linebreaksbr }}</td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock content_inner %}

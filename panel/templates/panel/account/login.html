@@ -1,0 +1,14 @@
+{% extends 'panel/account/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Login" %}{{ block.super }}{% endblock title %}
+
+{% block content_inner %}
+  {% trans "Login" as submit_text %}
+  {% include 'panel/_snippets/form.html' %}
+
+  <a class="btn btn-link btn-block" href="{% url 'panel:account_password_reset' %}">{% trans "Password reset" %}</a>
+{% endblock content_inner %}
+
+

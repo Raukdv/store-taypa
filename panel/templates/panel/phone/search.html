@@ -1,0 +1,36 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:phone_list' %}">{% trans "Phones" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "Search" %}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  {% include 'panel/_snippets/form.html' with layout="horizontal" %}
+
+  {% if object_list %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{% trans "Phone" %}</th>
+        <th scope="col">{% trans "Country" %}</th>
+        <th scope="col" class="text-right">{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <th scope="row">{{ object.friendly_name }}</th>
+          <td>{{ object.iso_country }}</td>
+          <td class="text-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'panel:phone_purchase' %}?phone={{ object.phone_number }}">{% trans "Purcharse" %}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+{% endblock content_inner %}

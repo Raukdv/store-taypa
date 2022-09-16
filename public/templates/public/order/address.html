@@ -1,0 +1,53 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block merchant_content %}
+
+  {% block breadcrumb %}
+    {% include 'public/_snippets/order/breadcrumb.html' %}
+  {% endblock breadcrumb %}
+
+  <div class="col">
+      
+    {% if shipping_address %} 
+        <div class="h3">
+            Enviar el pedído aquí.
+        </div>
+
+        <div>
+          
+            {% include 'public/_snippets/shipping_addresses/shipping_address.html' %}
+
+            <div class="mt-2">
+              <a class="btn btn-warning" href="{% url 'public:order_payment' company.slug %}">Confirmar envío</a>
+            </div>
+
+            <a href="{% url 'public:select_address' company.slug %}">Elegir otra dirección</a>
+        </div>
+
+        {% if can_choose_address %}
+
+          <div class="mt-2">
+            <a href="{% url 'public:select_address' company.slug %}">Elegir otra dirección</a>
+          </div>
+
+        {% endif %}
+
+    {% else %}
+
+        <div class="h3">
+            Registra tu dirección aquí.
+        </div>
+
+        <div class="">
+            {% url 'public:orderaddress_view' company.slug as next_url %}
+            <a href="{% url 'public:shippingaddress_add' company.slug %}?next={{ next_url }}">Nueva dirección de envío</a>
+        </div>
+
+    {% endif %}
+
+  </div>
+
+
+{% endblock merchant_content %}

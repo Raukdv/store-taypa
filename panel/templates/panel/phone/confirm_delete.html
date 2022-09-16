@@ -1,0 +1,13 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:phone_list' %}">{% trans "Phones" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "Delete" %} {{ object }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  {% include 'panel/_snippets/confirm_delete.html' %}
+{% endblock content_inner %}

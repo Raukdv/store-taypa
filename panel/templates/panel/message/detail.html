@@ -1,0 +1,48 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:message_list' company.slug %}">{% trans "Messages" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ object.date_creation|date:'DATETIME_FORMAT' }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+<table class="table table-borderless">
+  <tbody>
+    {% if object.customer %}
+    <tr>
+      <th class="w-25 text-right">{% trans "Customer" %}</th>
+      <td><a href="{% url 'panel:customer_detail' company.slug object.customer.id %}">{{ object.customer }}</a></td>
+    </tr>
+    {% endif %}
+    <tr>
+      <th class="w-25 text-right">{% trans "Type" %}</th>
+      <td>{{ object.get_type_display }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Direction" %}</th>
+      <td>{{ object.get_direction_display }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "From" %}</th>
+      <td>{{ object.from_ }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "To" %}</th>
+      <td>{{ object.to }}</td>
+    </tr>
+    {% if object.type == 'sms' %}
+    <tr>
+      <th class="w-25 text-right">{% trans "Content" %}</th>
+      <td>{{ object.content }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock content_inner %}

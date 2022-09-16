@@ -1,0 +1,47 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:customer_list' company.slug %}">{% trans "Customers" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+<div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{{ object }}</h2>
+    <div>
+      <a class="btn btn-success" href="{% url 'panel:product_change' company.slug object.id %}"><i class="fas fa-edit"></i> {% trans "Change" %}</a>
+      <a class="btn btn-danger" href="{% url 'panel:product_delete' company.slug object.id %}"><i class="fas fa-trash"></i> {% trans "Delete" %}</a>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    {% if object.image %}
+    <img class="card-img-top" src="{{ object.image.url }}" alt="Card image cap {{object.title}}" width="286" height="180">
+    {% endif %}
+
+    <div class="card-body">
+      <h5 class="card-title">{{object.title}}</h5>
+
+      <div class="h5 font-weight-bold">
+        Precio: <span class="text-warning">${{object.price}}</span>
+      </div>
+
+      <div class="h4">
+        <p>{{object.description}}</p>
+      </div>
+
+      <div class="h4">
+        Disponible: <i class="fas fa-{{ object.available|yesno:'check,times' }} text-{{ object.available|yesno:'success,danger' }}"></i>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock content_inner %}

@@ -1,0 +1,58 @@
+{% extends 'public/index.html' %}
+
+{% load i18n static %}
+
+{% block content_inner %}
+{% comment %} merchant banner {% endcomment %}
+
+
+<div id="banner">
+
+    <div class="banner-text">
+        <h1 style="font-size:50px">{{object.name}}</h1>
+        <p>I'm a merchant</p>
+    </div>
+
+</div>
+
+{% comment %} merchant navbar {% endcomment %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href={% url 'public:index' %}>Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="{% url 'public:merchant_cart' company.slug %}">Carrito <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="{% url 'public:shippingaddress_view' company.slug %}">Mis direcciones <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="{% url 'public:orders_list' company.slug %}">Mis ordenes</a>
+        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link disabled">Disabled</a>
+      </div>
+    </div>
+  </nav>
+
+  {% comment %} Category and items {% endcomment %}
+
+  {% block merchant_content %}
+  
+  <div class="container mt-4 ">
+
+    {% comment %} snippets for category {% endcomment %}
+    {% if category %}
+    <h3 class="mb-4 text-capitalize">{{category.title}} </h3>
+    {% include 'public/_snippets/products.html' with products=category.products.all %}
+    
+
+
+    {% endif %}
+    
+  </div>
+
+  {% endblock merchant_content %}
+
+{% endblock content_inner %}
+
+
+
+

@@ -1,0 +1,54 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:customer_list' company.slug %}">{% trans "Customers" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+<div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{{ object }}</h2>
+    <div>
+      <a class="btn btn-success" href="{% url 'panel:customer_change' company.slug object.id %}"><i class="fas fa-edit"></i> {% trans "Change" %}</a>
+      <a class="btn btn-danger" href="{% url 'panel:customer_delete' company.slug object.id %}"><i class="fas fa-trash"></i> {% trans "Delete" %}</a>
+    </div>
+  </div>
+
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <th class="w-25 text-right">{% trans "First name" %}</th>
+      <td>{{ object.first_name }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Last name" %}</th>
+      <td>{{ object.last_name }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Email" %}</th>
+      <td>{{ object.email|default:'' }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Phone" %}</th>
+      <td>{{ object.phone|default:'' }}</td>
+    </tr>
+    <tr>
+      <th class="w-25 text-right">{% trans "Send SMS" %}</th>
+      <td><i class="fas fa-{{ object.send_sms|yesno:'check,times' }} text-{{ object.send_sms|yesno:'success,danger' }}"></i></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="align-items-center d-flex justify-content-center">
+  {% if object.phone %}
+    <a class="btn btn-primary" href="{% url 'panel:customer_send_sms' company.slug object.id %}"><i class="fas fa-sms"></i> {% trans "Send SMS" %}</a>
+  {% endif %}
+</div>
+{% endblock content_inner %}

@@ -1,0 +1,16 @@
+{% extends 'public/company/merchant_detail.html' %}
+
+{% load bootstrap4 i18n %}
+
+
+
+{% block merchant_content %}
+
+<div class="col">
+    <div class="h3">Edit address</div>
+    <div class="">
+        {% include 'public/_snippets/shipping_addresses/form.html' %}
+    </div>
+</div>
+
+{% endblock merchant_content %}

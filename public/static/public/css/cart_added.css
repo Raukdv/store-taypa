@@ -1,0 +1,43 @@
+.cart-contner{
+    width: 20rem;
+    margin: 0 auto;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: #e9e9e975;
+}
+.cart-top{
+    margin: 0 ;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+}
+.card-title-cart{
+    color: green;
+}
+.product{
+    color: rgb(41, 70, 187);
+}
+.product:hover{
+    text-decoration: none;
+}
+.price{
+    
+    color: rgb(123, 44, 44);
+}
+/* rgb(123, 44, 44); */
+.price:hover{
+    text-decoration: none;
+
+}
+.view-cart{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.continue-shopping{
+    color: rgb(44, 26, 26) ;
+}
+.continue-shopping:hover{
+    text-decoration: none;
+    color: rgb(123, 44, 44);
+}

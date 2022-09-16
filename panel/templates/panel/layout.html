@@ -1,0 +1,33 @@
+{% load i18n static tz %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_timezone as TIME_ZONE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}" tz="{{ TIME_ZONE }}">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% if stripe_public_key %}
+    <meta name="spk" content="{{stripe_public_key}}">
+    {% endif %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '@fortawesome/fontawesome-free/css/all.min.css' %}">
+    {% block css %}{% endblock css %}
+    <link rel="stylesheet" href="{% static 'panel/css/panel.css' %}">
+
+    <title>{% block title %}Taypa!{% endblock title %}</title>
+  </head>
+  <body>
+    {% block content %}{% endblock content %}
+
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static '@popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'panel/js/inlines.js' %}"></script>
+    {% block scripts %}{% endblock scripts %}
+  </body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'panel/index.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "order" %}</li>
+{% endblock breadcrumb %}
+
+
+{% block content_inner %}
+
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "Orden ID" %}</th>
+          <th>{% trans "Usuario" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Total" %}</th>
+          <th>{% trans "Forma de Pago" %}</th>
+          <th class="text-right">{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <th><a href="#">{{ object.order_id }}</a></th>
+          <td>{{ object.user }}</td>
+          <td>{{ object.status }}</td>
+          <td>{{ object.total}}</td>
+          <td>{{ object.billing_profile.type_payment}}</td>
+
+          <td class="text-right">
+            <a class="btn btn-sm btn-success" href="#"><i class="fas fa-edit"></i> {% trans "Change" %}</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="text-center text-muted" colspan="5">
+            {% trans "No information." %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
+{% endblock content_inner %}
+

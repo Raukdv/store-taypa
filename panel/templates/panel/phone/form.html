@@ -1,0 +1,17 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:phone_list' %}">{% trans "Phones" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% if object %}{% trans "Change" %} {{ object }}{% else %}{% trans "Add" %}{% endif %}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  <div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{% if object %}{{ object }}{% else %}{% trans "Add phone" %}{% endif %}</h2>
+  </div>
+
+  {% include 'panel/_snippets/form.html' with layout="horizontal" %}
+{% endblock content_inner %}

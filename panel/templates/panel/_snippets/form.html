@@ -1,0 +1,17 @@
+{% load bootstrap4 i18n %}
+
+<form action="" class="form" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} novalidate>
+    {% csrf_token %}
+
+    {% bootstrap_form form layout=layout %}
+
+    {% for formset in formset_list %}
+      <div class="card mb-3">
+        {% include 'panel/_snippets/formset.html' %}
+      </div>
+    {% endfor %}
+
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">{% if submit_text %}{{ submit_text }}{% else %}{% trans "Submit" %}{% endif %}</button>
+    {% endbuttons %}
+</form>

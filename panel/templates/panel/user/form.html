@@ -1,0 +1,21 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:user_list' company.slug %}">{% trans "Users" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% if object %}{% trans "Change" %} {{ object }}{% else %}{% trans "Add" %}{% endif %}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  <div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{% if object %}{{ object }}{% else %}{% trans "Add user" %}{% endif %}</h2>
+  </div>
+
+  {% include 'panel/_snippets/form.html' with layout="horizontal" %}
+{% endblock content_inner %}

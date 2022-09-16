@@ -1,0 +1,18 @@
+{% extends 'public/layout.html' %}
+
+{% load i18n static %}
+
+{% block content %}
+<div class="container vh-100">
+  <div class="align-items-center d-flex h-100 justify-content-center">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div id="taypa-widget" data-slug="{{ object.slug }}"></div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+  <script src="{% static 'public/widget/js/chunk-vendors.js' %}"></script>
+  <script src="{% static 'public/widget/js/app.js' %}"></script>
+{% endblock scripts %}

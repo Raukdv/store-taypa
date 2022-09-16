@@ -1,0 +1,9 @@
+{% extends 'panel/account/layout.html' %}
+
+{% load i18n %}
+
+{% block content_inner %}
+  <p>{% translate "Thanks for spending some quality time with the Web site today." %}</p>
+
+  <a class="btn btn-block btn-primary" href="{% url 'panel:account_login' %}">{% translate 'Log in again' %}</a>
+{% endblock content_inner %}

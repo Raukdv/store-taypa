@@ -1,0 +1,59 @@
+
+{% extends 'panel/index.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "Phones" %}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  <div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{% trans "Phones" %}</h2>
+    <div>
+      <a class="btn btn-primary" href="{% url 'panel:phone_sync' %}"><i class="fas fa-sync"></i> {% trans "Sync" %}</a>
+      <a class="btn btn-primary" href="{% url 'panel:phone_search' %}"><i class="fas fa-search"></i> {% trans "Search & Purchase" %}</a>
+    </div>
+  </div>
+
+  {% include 'panel/_snippets/filter.html' %}
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "Phone" %}</th>
+          <th>{% trans "Company" %}</th>
+          <th class="text-center">{% trans "Connected" %}</th>
+          <th class="text-right">{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <th>{{ object }}</th>
+          <td>{{ object.company|default:'' }}</td>
+          <td class="text-center"><i class="fas fa-{{ object.is_connected|yesno:'check,times' }} text-{{ object.is_connected|yesno:'success,danger' }}"></i></td>
+          <td class="text-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'panel:phone_connect' object.pk %}"><i class="fas fa-link"></i> {% trans "Connect" %}</a>
+            <a class="btn btn-success btn-sm" href="{% url 'panel:phone_change' object.pk %}"><i class="fas fa-edit"></i> {% trans "Change" %}</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'panel:phone_delete' object.pk %}"><i class="fas fa-trash"></i> {% trans "Delete" %}</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="text-center text-muted" colspan="3">
+            {% trans "No information." %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
+{% endblock content_inner %}
+
+{% block css %}{{ filter.form.media.css }}{% endblock css %}
+{% block scripts %}{{ filter.form.media.js }}{% endblock scripts %}

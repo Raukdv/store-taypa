@@ -1,0 +1,48 @@
+{% extends 'panel/index.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block breadcrumb %}
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  <div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{% trans "Métodos de pago" %}</h2>
+    <a class="btn btn-primary" href="{% url 'billingprofile:billing_profile_create' %}"><i class="fas fa-plus"></i> {% trans "Añadir" %}</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "Tipo" %}</th>
+          <th>{% trans "Brand" %}</th>
+          <th>{% trans "Ultimos 4" %}</th>
+          <th class="text-right">{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          
+          <th>
+            {{object.type_payment}}
+          </th>
+          
+          <th><a href="#">{{ object.brand }}</a></th>
+          
+          <td>{{ object.last4 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="text-center text-muted" colspan="5">
+            {% trans "No information." %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
+{% endblock content_inner %}

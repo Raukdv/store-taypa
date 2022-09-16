@@ -1,0 +1,19 @@
+{% load extra_products %}
+
+<div class="row  border-bottom p-2 ">
+    <div class="col-7 ">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="product image" width="60" height="60">
+        {% endif %}
+    </div>
+    <div class="col">
+        <div class="row">
+            <strong>
+                <a href="{% url 'public:merchant_product_detail' company.slug product.slug %}">{{ product.title }}</a>
+            </strong>
+        </div>
+        <div class="row">
+            <strong class="price">{{ product.price | price_format }}</strong>
+        </div>
+    </div>
+</div>

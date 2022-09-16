@@ -1,0 +1,83 @@
+{% load boilerplate bootstrap4 i18n %}
+
+<div id="{{ formset.prefix }}-group" class="card-body js-inline-admin-formset p-0" data-inline-type="tabular"
+  data-inline-formset='{"name": "#{{ formset.prefix }}", "options": {"prefix": "{{ formset.prefix }}", "addText": "<i class=\"fas fa-plus\"></i> {% blocktrans with formset|formset_model_name as model %}Add another {{ model }}{% endblocktrans %}", "deleteText": "<i class=\"fas fa-trash\"></i>"}}'>
+  {{ formset.management_form }}
+  {% bootstrap_formset_errors formset %}
+
+  <div class="table-responsive-sm tabular inline-related">
+    <table class="table">
+      {% for form in formset %}
+      {% if forloop.first %}
+      <thead>
+        <tr>
+          <th class="hide">
+            </td>
+            {% for field in form.visible_fields %}
+            {% if 'DELETE' not in field.name %}
+          <th>
+            {% bootstrap_label field.label %}{% if field.help_text %} <abbr title="{{ field.help_text }}"><span
+                class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></abbr>{% endif %}
+          </th>
+          {% elif formset.can_delete %}
+          <th class="text-center">
+            {% if form.instance.pk %}{% bootstrap_label field.label %}{% endif %}
+          </th>
+          {% endif %}
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% endif %}
+        <tr class="{% cycle 'row1' 'row2' %}{% if form.instance.pk %} has_original{% endif %}"
+          id="{{ formset.prefix }}-{{ forloop.counter0 }}">
+          <td class="original hide">
+            {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+          </td>
+
+          {% for field in form.visible_fields %}
+          {% if 'DELETE' not in field.name %}
+          <td class="field-{{ field.name }} position-relative {% if field.errors %}text-danger{% endif %}">
+            {% bootstrap_field field show_label='skip' form_group_class='' %}
+          </td>
+          {% elif formset.can_delete %}
+          <td class="delete text-center">
+            {% if form.instance.pk %}{{ field }}{% endif %}
+          </td>
+          {% endif %}
+          {% endfor %}
+
+          {% if form.non_field_errors %}
+        </tr>
+        <tr>
+          <td class="text-danger bg-danger" colspan="{{ form.visible_fields|length }}">
+            {% for err in form.non_field_errors %}
+            {{ err }}
+            {% endfor %}
+          </td>
+          {% endif %}
+        </tr>
+
+        {% if forloop.last %}
+        <tr class="{% cycle 'row1' 'row2' %} empty-form" id="{{ formset.prefix }}-empty">
+          <td class="original hide">
+            {% for hidden in formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+          </td>
+
+          {% for field in formset.empty_form.visible_fields %}
+          {% if 'DELETE' not in field.name %}
+          <td
+            class="field-{{ field.name|slugify }} position-relative {% if field.errors %}bg-danger text-danger{% endif %}">
+            {% bootstrap_field field show_label=False form_group_class='' %}
+          </td>
+          {% elif formset.can_delete %}
+          <td class="delete text-center"></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

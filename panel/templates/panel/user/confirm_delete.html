@@ -1,0 +1,17 @@
+{% extends 'panel/index.html' %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'panel:user_list' company.slug %}">{% trans "Users" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "Delete" %} {{ object }}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  {% include 'panel/_snippets/confirm_delete.html' %}
+{% endblock content_inner %}

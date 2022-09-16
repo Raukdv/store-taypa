@@ -1,0 +1,56 @@
+{% extends 'panel/index.html' %}
+
+{% load bootstrap4 i18n %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'panel:index' %}">{% trans "Dashboard" %}</a></li>
+{% if company.parent_company %}
+<li class="breadcrumb-item"><a href="{{ company.parent_company.get_absolute_url }}">{{ company.parent_company }}</a></li>
+{% endif %}
+<li class="breadcrumb-item"><a href="{{ company.get_absolute_url }}">{{ company }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% trans "Feedbacks" %}</li>
+{% endblock breadcrumb %}
+
+{% block content_inner %}
+  <div class="align-items-center d-flex justify-content-between mb-3">
+    <h2>{% trans "Feedbacks" %}</h2>
+  </div>
+
+  {% include 'panel/_snippets/filter.html' %}
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "Creation date" %}</th>
+          <th>{% trans "Customer" %}</th>
+          <th class="text-center">{% trans "Positive" %}</th>
+          <th>{% trans "Service" %}</th>
+          <th>{% trans "Detail" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <th><a href="{% url 'panel:feedback_detail' company.slug object.id %}">{{ object.date_creation|date:'DATETIME_FORMAT' }}</a></th>
+          <td>{{ object.customer|default_if_none:'' }}</td>
+          <td class="text-center"><i class="fas fa-{{ object.is_positive|yesno:'check,times' }} text-{{ object.is_positive|yesno:'success,danger' }}"></i></td>
+          <td>{{ object.service|default:'' }}</td>
+          <td>{{ object.detail|default:''|truncatechars:25 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="text-center text-muted" colspan="5">
+            {% trans "No information." %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
+{% endblock content_inner %}
+
+{% block css %}{{ filter.form.media.css }}{% endblock css %}
+{% block scripts %}{{ filter.form.media.js }}{% endblock scripts %}

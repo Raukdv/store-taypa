@@ -1,0 +1,16 @@
+{
+  "name": "taypa",
+  "version": "1.0.0",
+  "scripts": {
+    "build:widget": "cd public/plugins/widget && npm run build",
+    "watch:widget": "cd public/plugins/widget && npm run watch"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.2",
+    "tempusdominus-bootstrap-4": "^5.39.0"
+  }
+}
